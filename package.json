@@ -1,0 +1,31 @@
+{
+  "name": "fileman",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "clone": "^2.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.16.3",
+    "file-type": "^10.7.0",
+    "generate-password": "^1.4.1",
+    "json-server": "^0.14.0",
+    "lodash": "^4.17.11",
+    "loopback3-xtotalcount": "^0.1.2",
+    "mongodb": "^2.2.36",
+    "mongoose": "^5.2.4",
+    "mongoose-sequence": "^4.0.1",
+    "mongoose-type-email": "^1.0.10",
+    "plugin": "^0.3.3",
+    "ra-data-simple-rest": "^2.5.2",
+    "request": "^2.88.0"
+  }
+}
