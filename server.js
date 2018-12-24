@@ -227,7 +227,7 @@ app.post('/supalogin', (req, res) => {
 
   var username = req.body.username;
   var password = req.body.password;
-  Event.findOne({username:username}).then((user) => {
+  Salesbase.findOne({username:username}).then((user) => {
     if(!user){
       return res.status(401).send(`${username} is not correct, please try again!`);
     }else if(password === user.password){
