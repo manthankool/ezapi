@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
-const plugin = require('plugin');
+// const AutoIncrement = require('mongoose-sequence')(mongoose);
+// const plugin = require('plugin');
+
 var validateEmail = function(email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
@@ -17,42 +18,10 @@ var Event = mongoose.model('Event',{
       // unique:true,
       minlength:6
     },
-    subadminname:{
+    event_id:{
       type:String,
-      // required:true,
-      trim:true,
-      // unique: true,
-      minlength:1
-    },
-    phone:{
-      type:String,
-      // required:true,
-      trim:true,
-      minlength:10
-    },
-    address:{
-      type:String,
-      // required:true,
-      minlength:12
-    },
-    email:{
-      type:String,
-      // required:true,
-      trim:true,
-      lowercase:true,
-      index:true,
-      sparse:true,
-      // required:'Please enter your email address',
-      validate: [validateEmail, 'Please fill a valid email address'],
-      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
-
-      minlength:7
-    },
-    companylogo:{
-      type:String,
-      // required:true,
-      data:Buffer
-    },
+      default:'EZM00-'
+    },    
     username:{
       type:String,
       // required:true,
@@ -64,11 +33,51 @@ var Event = mongoose.model('Event',{
       type:String,
       minlength:7
     },
+    subadmin:[{
+      name:{type:String,trim:true},
+      username:{type:String,minlength:7},
+      password:{type:String,minlength:7},
+      email:{
+          type:String,
+          required:true,
+          trim:true,
+          lowercase:true,
+          index:true,
+          sparse:true,
+          required:'Please enter your email address',
+          validate: [validateEmail, 'Please fill a valid email address'],
+          match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+        },
+      phone:{type:Number},
+      address:{type:String}
+    }],
+    admin:[{
+      name:{type:String,trim:true},
+      username:{type:String,minlength:7},
+      password:{type:String,minlength:7},
+      whichevent:{type:String,trim:true},
+      subevent_id:{type:String,trim:true},
+      email:{
+          type:String,
+          required:true,
+          trim:true,
+          lowercase:true,
+          index:true,
+          sparse:true,
+          required:'Please enter your email address',
+          validate: [validateEmail, 'Please fill a valid email address'],
+          match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+        },
+      phone:{type:Number},
+      address:{type:String}
+    }],
     car:[{
       id:{type:String},
       carname: {type:String},
-      carnumber: {type:String},
+      carnumber: {type:String,trim:true},
+      caroccupied:{type:Boolean,default:true},
       carowner:{type:String},
+      driverusername:{type:String},
       carownernumber : {type:Number},
       carowneremail:{
           type:String,
@@ -85,9 +94,12 @@ var Event = mongoose.model('Event',{
 
     driver:[{
       driverusername:{type: String},
+      driverpassword:{type: String},
+      whichcar:{type:String, trim:true},
       name: {type:String},
       phone: {type:Number},
       licenseno: {type:String},
+      driverfree:{type:Boolean,default:true},
       driveremail:{
         type:String,
         required:true,
@@ -102,7 +114,8 @@ var Event = mongoose.model('Event',{
     }],
 
     hotel:[{
-      hotelusername: {type:String},
+      hotelusername: {type:String,minlength:7},
+      hotelpassword:{type: String,minlength:7},
       hotelname: {type:String},
       hoteladdress: {type:String},
       hotelnumber: {type:Number},
@@ -146,7 +159,8 @@ var Event = mongoose.model('Event',{
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
       },
-      hostnumber:{type:String,trim:true}
+      hostnumber:{type:String,trim:true},
+      subevent_id:{type:String,trim:true}
     }]
 
 
@@ -156,7 +170,7 @@ var Event = mongoose.model('Event',{
 
 
 
-var SubAdmin = mongoose.model('SubAdmin',{
+var SuperAdmin = mongoose.model('SuperAdmin',{
 
   name:{
     type:String,
